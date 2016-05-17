@@ -1,0 +1,11 @@
+This is Foreman discovery image
+
+To get instructions how to use the image head over to
+
+https://github.com/theforeman/foreman_discovery
+
+Image was built from 2.1.0 (e74dc86)
+
+To verify the kernel and initrd in this tar, run
+
+  sha256sum -c SHA256SUM

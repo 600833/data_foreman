@@ -1,0 +1,9 @@
+49 | ks_end_iss                    | finish   
+55 | ks_end_iss_phy                | finish   
+50 | ks_prov_iss                   | provision
+54 | ks_prov_iss_phy               | provision
+51 | ks_pxelinux_iss               | PXELinux 
+56 | ks_pxelinux_iss_phy           | PXELinux 
+52 | ks_snp_iss_2_adapter          | snippet  
+48 | ks_snp_iss_common_repo        | snippet  
+53 | ks_snp_iss_puppet.conf        | snippet  

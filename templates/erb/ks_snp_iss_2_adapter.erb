@@ -1,0 +1,26 @@
+<%#
+kind: snippet
+name: iss_2_network_adapter
+%>
+<% @host.managed_interfaces.each do |interface| 
+ next if !interface.managed? || interface.subnet.nil? 
+
+ subnet = interface.subnet
+%>
+
+real=`ip -o link | grep <%= interface.mac -%> | awk '{print $2;}' | sed s/:$//`
+
+cat << EOF > /etc/sysconfig/network-scripts/ifcfg-$real
+IPADDR="<%= interface.ip -%>"
+NETMASK="<%= subnet.mask -%>"
+<% if interface.primary then -%>
+GATEWAY="<%= subnet.gateway %>"
+<% end -%>
+DEVICE="$real"
+HWADDR="<%= interface.mac -%>"
+ONBOOT=yes
+PEERDNS=yes
+PEERROUTES=yes
+EOF
+
+<% end %>

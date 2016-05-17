@@ -1,0 +1,29 @@
+<%#
+kind: snippet
+name: ks_snp_iss_puppet.conf
+%>
+<%
+ certname=@prov_carte_name.sub(/\.adm\./,".")
+-%>
+[main]
+vardir          = /var/lib/puppet
+logdir          = /var/log/puppet
+rundir          = /var/run/puppet
+ssldir          = \$vardir/ssl
+parser          = future
+ordering        = manifest
+stringify_facts = false
+
+[agent]
+listen          = true
+pluginsync      = true
+report          = true
+ignoreschedules = false
+daemon          = false
+ca_server       = <%= @host.puppet_ca_server %>
+certname        = <%= certname %>
+dns_alt_names   = <%= @prov_carte_name %>
+node_name       = facter
+node_name_fact  = fqdn
+environment     = <%= @host.environment %>
+server          = <%= @host.puppetmaster %>

@@ -1,0 +1,43 @@
+<%#
+kind : snippet
+%>
+<%
+os_major = @host.operatingsystem.major.to_i
+os_minor = @host.operatingsystem.minor.to_i
+repo_tag = @host.params['repo_tag']
+repo_server = @host.params['repo_server']
+-%>
+mv /etc/yum.repos.d  /etc/yum.repos.d_old
+mkdir /etc/yum.repos.d
+#Create repo for RHEL
+cat > /etc/yum.repos.d/<%=repo_tag%>_<%=os_major%>.<%=os_minor%>_os_<%=@host.architecture%>.repo << EOF
+[<%=repo_tag%>_<%=os_major%>.<%=os_minor%>_os_<%=@host.architecture%>]
+name=<%=repo_tag%>_<%=os_major%>.<%=os_minor%>_os_<%=@host.architecture%>
+baseurl=http://<%=repo_server%>/<%=repo_tag%>/<%=os_major%>.<%=os_minor%>/os/<%=@host.architecture%>
+enabled=1
+gpgcheck=0
+EOF
+# Create repo for EPLE
+cat > /etc/yum.repos.d/epel_<%=os_major%>_<%=@host.architecture%>.repo << EOF
+[epel_<%=os_major%>_<%=@host.architecture%>]
+name=epel_<%=os_major%>_<%=@host.architecture%>
+baseurl=http://<%=repo_server%>/misc/epel/<%=os_major%>/os/<%=@host.architecture%>
+enabled=1
+gpgcheck=0
+EOF
+#Create repo for puppet
+cat > /etc/yum.repos.d/puppetlabs-products-<%=@host.params['puppet_version']%>.repo <<EOF
+[puppetlabs-products-<%=@host.params['puppet_version']%>]
+name=puppetlabs-products-<%=@host.params['puppet_version']%>
+baseurl=http://<%=repo_server%>/misc/puppetlabs-products/<%=os_major%>/os/<%=@host.architecture%>/puppet_<%=@host.params['puppet_version']%>
+enabled=1
+gpgcheck=0
+EOF
+#Create repo for puppet dependencies 
+cat > /etc/yum.repos.d/puppetlabs-deps-<%=@host.params['puppet_version']%>.repo <<EOF
+[puppetlabs-deps-<%=@host.params['puppet_version']%>]
+name=puppetlabs-deps-<%=@host.params['puppet_version']%>
+baseurl=http://<%=repo_server%>/misc/puppetlabs-deps/<%=os_major%>/os/<%=@host.architecture%>/puppet_<%=@host.params['puppet_version']%>
+enabled=1
+gpgcheck=0
+EOF

@@ -1,0 +1,26 @@
+[logging]
+ default = FILE:/var/log/krb5libs.log
+ kdc = FILE:/var/log/krb5kdc.log
+ admin_server = FILE:/var/log/kadmind.log
+
+[libdefaults]
+ default_realm = NPP.TCS
+ dns_lookup_realm = true
+ dns_lookup_kdc = true
+ ticket_lifetime = 24h
+ renew_lifetime = 7d
+ forwardable = true
+# rdns = false
+ default_ccache_name = KEYRING:persistent:%{uid}
+
+[realms]
+ NPP.TCS = {
+  kdc = npp-sb1-cs-ad1.npp.tcs
+  admin_server = npp-sb1-cs-ad1.npp.tcs
+  default_domain = NPP.TCS
+ }
+
+[domain_realm]
+ .npp.tcs = NPP.TCS
+ npp.tcs = NPP.TCS
+# example.com = EXAMPLE.COM
